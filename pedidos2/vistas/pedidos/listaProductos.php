@@ -4,18 +4,13 @@ require_once("../../entidad/Producto.php");
 
 session_start();
 
-if (!isset($_SESSION['productos'])) {
-    $_SESSION['productos'] = array();
-}
 
-//$_SESSION['productos'][] = new Producto("Agua", 2500);
-//$_SESSION['productos'][] = new Producto("Gaseosa", 2500);
-
+$id = $_GET['id'];
 
 $productos = $_SESSION['productos'];
 
-
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -27,39 +22,34 @@ $productos = $_SESSION['productos'];
 </head>
 <body>
     <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-    <center><h1>Lista de Productos</h1></center>
-    <br><br>
-    <a class="btn btn-primary" href="create.php">Agregar Producto</a>
-    <a class="btn btn-secondary float-end" href="../../index.php">Volver</a>
-    <br><br>
-    <?php
+        <form method="post" action="addProductosPedido.php">
+            <input type="hidden" name="id" value="<?php echo $id; ?>" 7>
+            <button class="btn btn-success" type="submit">Agregar</button>
+            <button class="btn btn-secondary float-end" type="button" onclick="history.back();">Volver</button>
+            <br>
+<?php
         if (count($productos)>0) {
             ?>
-            <table class="table table-striped">
+            <table class="table table-striped mt-5">
                 <thead>
                     <tr>
+                        <th></th>
                         <th>Id</th>
                         <th>Nombre del Producto</th>
                         <th>Precio del Producto</th>
                         <th>Descripción del Producto</th>
                         <th>Imagen</th>
-                        <th>Opciones</th>
                 </thead>
                 <tbody>
                     <?php
                     foreach($productos as $indice => $valor) {
                         echo "<tr>";
+                        echo "<td><input type='checkbox' name='items[]' value='$indice' /></td>";
                         echo "<td>$indice</td>";
                         echo "<td>$valor->nombre</td>";
                         echo "<td>$valor->precio</td>";
                         echo "<td>$valor->descripcion</td>";
                         echo "<td><img src='$valor->foto' width='50' height='50'></td>";
-                        echo "<td>";
-                        echo "<a href='edit.php?id=$indice' class='btn btn-warning me-2'>Editar</a>";
-                        echo "<a href='delete.php?id=$indice' class='btn btn-danger'>Eliminar</a>";
-                        echo "</td>";
                         echo "</tr>\n";
                     }
                     ?>
@@ -70,8 +60,7 @@ $productos = $_SESSION['productos'];
             echo "<h2>No existe Productos</h2>";
         }
     ?>
-    </div>
-    </div>
+    </form>
     </div>
 </body>
 </html>

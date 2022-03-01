@@ -32,7 +32,8 @@ $pedidos = $_SESSION['pedidos'];
             <div class="col-lg-12">
     <center><h1>Lista de Pedidos</h1></center>
     <br><br>
-    <a class="btn btn-primary" href="create.php">Agregar Pedido</a>
+    <a class="btn btn-success" href="create.php">Agregar Pedido</a>
+    <a class="btn btn-secondary float-end" href="../../index.php">Volver</a>
     <br><br>
     <?php
         if (count($pedidos)>0) {
@@ -57,8 +58,8 @@ $pedidos = $_SESSION['pedidos'];
                         echo "<td>$valor->formaPago</td>";
                         echo "<td>$valor->total</td>";
                         echo "<td>";
-                        echo "<a href='edit.php?id=$indice' class='btn btn-warning me-2'>Editar</a>";
-                        echo "<a href='delete.php?id=$indice' class='btn btn-danger'>Eliminar</a>";
+                        echo "<a href='delete.php?id=$indice' class='btn btn-danger me-2'>Eliminar</a>";
+                        echo "<a href='show.php?id=$indice' class='btn btn-primary'>Ver Pedido</a>";
                         echo "</td>";
                         echo "</tr>\n";
                     }

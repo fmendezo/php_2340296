@@ -1,38 +1,40 @@
 <?php
-
+require_once("../../entidad/Pedido.php");
+require_once("../../entidad/Cliente.php");
 require_once("../../entidad/Producto.php");
 
 session_start();
 
-if (!isset($_SESSION['productos'])) {
-    $_SESSION['productos'] = array();
-}
+$id = $_GET['id'];
 
-//$_SESSION['productos'][] = new Producto("Agua", 2500);
-//$_SESSION['productos'][] = new Producto("Gaseosa", 2500);
-
-
-$productos = $_SESSION['productos'];
-
+$pedido = $_SESSION['pedidos'][$id];
+//echo var_dump($pedido);
+$productos = $pedido->productos;
 
 ?>
+
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Productos</title>
+    <title>Ver Detalles Pedido</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 </head>
 <body>
     <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-    <center><h1>Lista de Productos</h1></center>
+    <h1>Ver Detalles Pedido</h1>
     <br><br>
-    <a class="btn btn-primary" href="create.php">Agregar Producto</a>
-    <a class="btn btn-secondary float-end" href="../../index.php">Volver</a>
+    <?php
+        echo "Cliente:<spam>".$pedido->cliente->nombre." ".$pedido->cliente->apellido."</spam><br>";
+        echo "Fecha:<spam>$pedido->fecha</spam><br>";
+        echo "Forma de Pago:<spam>$pedido->formaPago</spam><br>";
+        echo "Total: $<spam>$pedido->total</spam><br>";
+    ?>
+    <br><br>
+
+    <a class="btn btn-secondary float-end" href="index.php">Volver</a>
     <br><br>
     <?php
         if (count($productos)>0) {
@@ -45,7 +47,6 @@ $productos = $_SESSION['productos'];
                         <th>Precio del Producto</th>
                         <th>Descripción del Producto</th>
                         <th>Imagen</th>
-                        <th>Opciones</th>
                 </thead>
                 <tbody>
                     <?php
@@ -56,10 +57,6 @@ $productos = $_SESSION['productos'];
                         echo "<td>$valor->precio</td>";
                         echo "<td>$valor->descripcion</td>";
                         echo "<td><img src='$valor->foto' width='50' height='50'></td>";
-                        echo "<td>";
-                        echo "<a href='edit.php?id=$indice' class='btn btn-warning me-2'>Editar</a>";
-                        echo "<a href='delete.php?id=$indice' class='btn btn-danger'>Eliminar</a>";
-                        echo "</td>";
                         echo "</tr>\n";
                     }
                     ?>
@@ -70,8 +67,6 @@ $productos = $_SESSION['productos'];
             echo "<h2>No existe Productos</h2>";
         }
     ?>
-    </div>
-    </div>
     </div>
 </body>
 </html>
